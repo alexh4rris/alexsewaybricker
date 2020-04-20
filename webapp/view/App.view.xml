@@ -16,7 +16,17 @@
 									</pages>
 								</Carousel>
 								<Button text="{i18n>showHelloButtonText}" press="onShowHello"/>
-								<Input value="{helloPanel>/recipient/name}" description="Hello {helloPanel>/recipient/name}" valueLiveUpdate="true" width="60%"/>
+								<Input 
+								value="{
+								path: 'helloPanel>/recipient/name',
+								type: 'sap.ui.model.type.Float',
+								formatOptions: {
+								 minFractionDigits: 2 },
+								 constraints: {
+								 maximum: 3000}
+								 }"	
+								description="Hello {helloPanel>/recipient/name}" 
+								width="60%"/>
 							</IconTabFilter>
 							<IconTabFilter id="layouts" text="{i18n>layoutFilter}">
 								<MessageStrip showIcon="true" text="Here's a form layout inside an Icon Tab Bar" type="Information"/>
@@ -50,9 +60,36 @@
 								</Toolbar>
 							</IconTabFilter>
 							<IconTabFilter text="Data Binding" key="db">
-								<List headerText="Products" width="auto" items="{/ProductSet}">
+								<content>
+								<List id="InvoiceList" 
+								items="{
+								path: '/ProductSet',
+								sorter : {
+								path: 'Category',
+								group: true}
+								}" >
+									<headerToolbar>
+										<Toolbar>
+											<Title text="Products"/>
+											<ToolbarSpacer/>
+											<SearchField width="50%" search="onFilterProducts"/>
+										</Toolbar>
+									</headerToolbar>
 									<items>
-										<ObjectListItem title="{Name}" number="{Price}" numberState="{= ${Price} > 500 ? 'Error' : 'Success'}" numberUnit="{CurrencyCode}"
+										<ObjectListItem title="{Name}" 
+										number="{
+										parts : [
+										{path : 'Price'},
+										{path : 'CurrencyCode'}
+										],
+										type: 'sap.ui.model.type.Currency',
+										formatOptions: {
+										showMeasure: false
+										}
+										}"
+										numberUnit="{CurrencyCode}"	
+										numberState="{= ${Price} > 500 ? 'Error' : 'Success'}" 
+										
 											intro="{ProductID}">
 											<firstStatus>
 												<ObjectStatus 
@@ -67,6 +104,7 @@
 										</ObjectListItem>
 									</items>
 								</List>
+								</content>
 							</IconTabFilter>
 						</items>
 					</IconTabBar>
