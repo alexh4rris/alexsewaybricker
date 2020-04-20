@@ -49,6 +49,18 @@
 									<Button text="{i18n>layoutDraftButton}" icon="sap-icon://save"/>
 								</Toolbar>
 							</IconTabFilter>
+							<IconTabFilter text="Data Binding" key="db">
+						<List headerText="Products" width="auto" items="{/ProductSet}">
+							<items>
+								<ObjectListItem title="{Name}" 
+								number="{Price}" 
+								intro="{ProductID}" 
+								numberUnit="{CurrencyCode}">
+									</ObjectListItem>
+							</items>
+						</List>
+					</IconTabFilter> 
+
 						</items>
 					</IconTabBar>
 				</content>
