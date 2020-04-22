@@ -1,5 +1,6 @@
 <mvc:View displayBlock="true" xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core" xmlns="sap.m" xmlns:l="sap.ui.layout"
-	xmlns:f="sap.ui.layout.form" controllerName="com.numen.myapp.controller.App">
+	xmlns:f="sap.ui.layout.form"
+	controllerName="com.numen.myapp.controller.App">
 	<App>
 		<pages>
 			<Page title="openSAP - Developing with SAPUI5">
@@ -66,8 +67,16 @@
 								path: '/ProductSet',
 								sorter : {
 								path: 'Category',
-								group: true}
-								}" >
+								group: true},
+								
+								parameters: {
+								expand: 'ToSupplier'}
+								}" 
+								growing="true"
+								growingThreshold="5"
+								growingScrollToLoad="false"
+								mode="SingleSelectMaster"
+								selectionChange="onInitSelect">
 									<headerToolbar>
 										<Toolbar>
 											<Title text="Products"/>
@@ -101,9 +110,24 @@
 												formatter : '.formatter.delivery' }"
 												/>
 											</firstStatus>
+											<secondStatus>
+												<ObjectStatus 
+												title="Delivered From"
+												text="{ToSupplier/Address/City}"/>
+											</secondStatus>
 										</ObjectListItem>
 									</items>
 								</List>
+								<Panel id="productDetailsPanel"
+									headerText="productDetails"
+									visible="false"> 
+									<l:Grid>
+										<Text text="Product ID: {ProductID}"/>
+										<Text text="Product Name: {Name}"/>
+										<Text text="Description: {Description}"/>
+										<Text text="Price: {Price}"/>
+									</l:Grid>
+									</Panel>
 								</content>
 							</IconTabFilter>
 						</items>
